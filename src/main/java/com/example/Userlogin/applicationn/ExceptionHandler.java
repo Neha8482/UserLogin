@@ -13,10 +13,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class ExceptionHandler implements HandlerInterceptor {
 	
 	@org.springframework.web.bind.annotation.ExceptionHandler(value = {ValidationException.class})
-	public ResponseEntity<Object> sendResponse(){
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Somethig wrong with the request, please check and try again");
+	public ResponseEntity<Object> sendResponse(ValidationException e){
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 	}
-	
 	//more Exception Handlers can be added in this way here
-
 }
