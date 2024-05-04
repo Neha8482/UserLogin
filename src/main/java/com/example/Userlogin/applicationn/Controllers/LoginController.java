@@ -34,18 +34,15 @@ public class LoginController {
 		String password = "";
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		Optional<User> user = null;
-		
 		try {
 			user = Optional.ofNullable(userService.getUser(userLoginRequest.getEmail()));
-			password = user.isPresent() ?   user.get().getPassword():"";
-		    System.out.print(password);
+			password = user.isPresent() ? user.get().getPassword():"";
+		    System.out.print("here "+password);
 		}catch(Exception e) {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is Incorrect");
-			throw new ValidationException("Email is Incorrect");
+			throw new ValidationException("Email recieved is Incorrect,please try again");
 		}
 		if(!bCryptPasswordEncoder.matches(userLoginRequest.getPassword(),password)) {
-			//return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password is Incorrect");
-			throw new ValidationException("Password is Incorrect");
+			throw new ValidationException("Password recieved is Incorrect,please try again");
 		}
 		if(user.isPresent()) userService.updateLastLogin(new Date(),user.get().getId());
 		return ResponseEntity.ok("Login Successfull");

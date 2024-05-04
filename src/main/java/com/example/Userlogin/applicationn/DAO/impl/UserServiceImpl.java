@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.Userlogin.applicationn.DAO.UserService;
 import com.example.Userlogin.applicationn.DTO.User;
 import com.example.Userlogin.applicationn.Repository.UserRepository;
+
+
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -42,6 +45,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	@Transactional
 	public void updateLastLogin(Date date,int id) {
 		userRepository.updateUserLastLogin(date, id);
 	}

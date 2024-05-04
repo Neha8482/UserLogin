@@ -1,6 +1,7 @@
 package com.example.Userlogin.applicationn.DTO;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -12,9 +13,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -33,7 +31,7 @@ public class User {
 	@Column
     private String password;
 	@Column
-    private LocalDateTime lastLogin;
+    private Date lastLogin;
 	
 	public int getId() {
 		return id;
@@ -73,11 +71,11 @@ public class User {
 		this.password = bCryptPasswordEncoder.encode(password);
 	}
 
-	public LocalDateTime getLastLogin() {
+	public Date getLastLogin() {
 		return lastLogin;
 	}
 
-	public void setLastLogin(LocalDateTime lastLogin) {
+	public void setLastLogin(Date lastLogin) {
 		this.lastLogin = lastLogin;
 	}
 

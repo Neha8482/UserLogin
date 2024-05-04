@@ -1,4 +1,5 @@
 package com.example.Userlogin.applicationn.DAO;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface UserService{
 	
 	User getUser(String email) throws Exception;
 	
-	void updateLastLogin(Date date,int id);
+	void updateLastLogin(Date localDate,int id);
 	
 }
 

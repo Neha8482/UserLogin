@@ -19,6 +19,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	@Modifying
 	@Query("update User set lastLogin=:date where id=:id")
-	void updateUserLastLogin(@Param("date") Date date,@Param("id") int id);
+	void updateUserLastLogin(@Param("date") Date date, @Param("id") int id);
+
 }
 
