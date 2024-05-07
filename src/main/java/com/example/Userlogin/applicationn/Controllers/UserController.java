@@ -1,6 +1,9 @@
 package com.example.Userlogin.applicationn.Controllers;
 
 import java.util.List;
+
+import javax.xml.bind.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,21 +36,25 @@ public class UserController {
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<Void> createUser(@RequestBody User user) {
+	public ResponseEntity<Void> createUser(@RequestBody User user) throws ValidationException {
 		System.out.print(user);
+		User userIn = userService.findUserByEmail(user.getEmail());
+		if(userIn != null) {
+			throw new ValidationException("User with email already exists");
+		}
 		userService.addUser(user);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Void> UpdateUser(@RequestBody User user) {
+	public ResponseEntity<Void> UpdateUser(@RequestBody User user) throws Exception{
 		System.out.print(user);
 		userService.updateUser(user);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity<Void> deleteUser(@RequestParam Integer id) {
+	public ResponseEntity<Void> deleteUser(@RequestParam Integer id) throws Exception{
 		userService.deleteUser(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

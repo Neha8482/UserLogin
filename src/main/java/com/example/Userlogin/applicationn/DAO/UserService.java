@@ -22,5 +22,9 @@ public interface UserService{
 	
 	void updateLastLogin(Date localDate,int id);
 	
+	User getUserById(Integer id);
+	
+	User findUserByEmail(String email);
+	
 }
 

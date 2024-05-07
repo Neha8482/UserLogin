@@ -49,4 +49,15 @@ public class UserServiceImpl implements UserService{
 	public void updateLastLogin(Date date,int id) {
 		userRepository.updateUserLastLogin(date, id);
 	}
+
+	@Override
+	public User getUserById(Integer id) {
+		Optional<User> user  = userRepository.findById(id);
+		return user.get();
+	}
+
+	@Override
+	public User findUserByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
 }

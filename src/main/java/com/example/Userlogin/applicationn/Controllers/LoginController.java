@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Userlogin.applicationn.DAO.SessionTokenService;
 import com.example.Userlogin.applicationn.DAO.UserService;
 import com.example.Userlogin.applicationn.DTO.User;
 import com.example.Userlogin.applicationn.DTO.UserLoginRequest;
@@ -25,6 +26,9 @@ public class LoginController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	SessionTokenService sessionTokenService;
 	
 	@PostMapping("/login")
 	public ResponseEntity<String> loginUser(@RequestBody UserLoginRequest userLoginRequest) throws Exception{
@@ -39,12 +43,14 @@ public class LoginController {
 			password = user.isPresent() ? user.get().getPassword():"";
 		    System.out.print("here "+password);
 		}catch(Exception e) {
+			System.out.print(e);
 			throw new ValidationException("Email recieved is Incorrect,please try again");
 		}
 		if(!bCryptPasswordEncoder.matches(userLoginRequest.getPassword(),password)) {
 			throw new ValidationException("Password recieved is Incorrect,please try again");
 		}
 		if(user.isPresent()) userService.updateLastLogin(new Date(),user.get().getId());
+		sessionTokenService.generateToken(user.get());
 		return ResponseEntity.ok("Login Successfull");
 	}
 }
